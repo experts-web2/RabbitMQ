@@ -5,27 +5,27 @@ using RabitMqAPI.Services;
 
 namespace RabitMqAPI.Controllers
 {
-	[Route("api/[controller]")]
+    [Route("api/[controller]")]
 	[ApiController]
 	public class CustomerController : ControllerBase
 	{
 		private readonly ICustomerService _customerService;
 		private readonly IRabitMQProducer _rabitMQProducer;
-		public CustomerController(ICustomerService customerService, IRabitMQProducer rabitMQProducer)
+        public CustomerController(ICustomerService customerService, IRabitMQProducer rabitMQProducer)
 		{
 			_customerService = customerService;
 			_rabitMQProducer = rabitMQProducer;
-		}
+        }
 		
 		[HttpGet]
 		public async Task<IActionResult> GetAll()
 		{
-			return Ok(await _customerService.GetAllAsync().ConfigureAwait(false));
+			return Ok(await _customerService.GetAllAsync());
 		}
-		[HttpGet("{id:length(24)}")]
+		[HttpGet("{id}")]
 		public async Task<IActionResult> Get(string id)
 		{
-			var customer = await _customerService.GetByIdAsync(id).ConfigureAwait(false);
+			var customer = await _customerService.GetByIdAsync(id);
 			if (customer == null)
 			{
 				return NotFound();
@@ -39,31 +39,33 @@ namespace RabitMqAPI.Controllers
 			{
 				return BadRequest();
 			}
-			var customrCreated =  _customerService.CreateAsync(customer).ConfigureAwait(false);
-			_rabitMQProducer.SendMessage(customrCreated);
-			return Ok(customer.Id);
+			var customrCreated = await  _customerService.CreateAsync(customer);
+            _rabitMQProducer.SendMessage(customrCreated);
+
+            return Ok(customer);
 		}
-		[HttpPut("{id:length(24)}")]
+		[HttpPut("{id}")]
 		public async Task<IActionResult> Update(string id, Customer customerIn)
 		{
-			var customer = await _customerService.GetByIdAsync(id).ConfigureAwait(false);
+			var customer = await _customerService.GetByIdAsync(id);
 			if (customer == null)
 			{
 				return NotFound();
 			}
-			await _customerService.UpdateAsync(id, customerIn).ConfigureAwait(false);
+			await _customerService.UpdateAsync(id, customerIn);
 			return NoContent();
 		}
-		[HttpDelete("{id:length(24)}")]
+		[HttpDelete("{id}")]
 		public async Task<IActionResult> Delete(string id)
 		{
-			var customer = await _customerService.GetByIdAsync(id).ConfigureAwait(false);
+			var customer = await _customerService.GetByIdAsync(id);
 			if (customer == null)
 			{
 				return NotFound();
 			}
-			await _customerService.DeleteAsync(customer.Id).ConfigureAwait(false);
+			await _customerService.DeleteAsync(customer.Id);
 			return NoContent();
 		}
-	}
+  
+    }
 }

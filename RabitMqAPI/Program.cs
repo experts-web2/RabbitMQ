@@ -1,6 +1,8 @@
 using Microsoft.OpenApi.Models;
+using RabbitMQ.Client;
 using RabitMqAPI.Models;
 using RabitMqAPI.RabitMQ;
+using RabitMqAPI.Repository;
 using RabitMqAPI.Services;
 
 namespace RabitMqAPI
@@ -18,8 +20,9 @@ namespace RabitMqAPI
 				c.SwaggerDoc("v1", new OpenApiInfo { Title = "MongoDB CRUD API", Version = "v1" });
 			});
 
-			builder.Services.Configure<DbConfiguration>(builder.Configuration.GetSection("RabitMQDbConnection"));
-			builder.Services.AddScoped<ICustomerService, CustomerService>();
+			builder.Services.Configure<DbConfiguration>(builder.Configuration.GetSection("MongoDbConnection"));
+            builder.Services.AddScoped<ICustomerService, CustomerService>();
+			builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 			builder.Services.AddScoped<IRabitMQProducer, RabitMQProducer>();
 			builder.Services.AddControllers();
 			// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

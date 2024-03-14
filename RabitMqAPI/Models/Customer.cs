@@ -6,7 +6,7 @@ namespace RabitMqAPI.Models
 	public class Customer
 	{
 		[BsonId]
-		[BsonRepresentation(BsonType.ObjectId)]
+		[BsonRepresentation(BsonType.String)]
 		public string Id { get; set; }
 
 		[BsonElement("firstName")]

@@ -4,7 +4,7 @@ using RabitMqAPI.Models;
 
 namespace RabitMqAPI.Repository
 {
-	public class CustomerRepository : ICustomerRepository
+    public class CustomerRepository : ICustomerRepository
     {
         private readonly IMongoCollection<Customer> _collection;
         private readonly DbConfiguration _settings;
@@ -26,7 +26,8 @@ namespace RabitMqAPI.Repository
         }
         public async Task<Customer> CreateAsync(Customer customer)
         {
-            await _collection.InsertOneAsync(customer).ConfigureAwait(false);
+            //customer.Id = ObjectId.GenerateNewId(); 
+            await _collection.InsertOneAsync(customer);
             return customer;
         }
         public Task UpdateAsync(string id, Customer customer)
