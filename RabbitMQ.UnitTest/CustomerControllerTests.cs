@@ -84,7 +84,7 @@ namespace RabbitMQ.UnitTest
             // Arrange
             var mockCustomerService = new Mock<ICustomerService>();
             var rabitMQProducerService = new Mock<IRabitMQProducer>();
-            var expectedCustomer = new Customer { Id = "validId", FirstName = "John", LastName = "Doe" };
+            var expectedCustomer = new Customer { Id = "3", FirstName = "John", LastName = "Doe", Contact = "0323423", Email = "john@gmail.com", Country = "Usa" };
 
             mockCustomerService.Setup(service => service.CreateAsync(expectedCustomer))
                 .ReturnsAsync(expectedCustomer);
@@ -98,8 +98,8 @@ namespace RabbitMQ.UnitTest
 
             // Assert
             var okResult = Assert.IsType<OkObjectResult>(result);
-            var actualCustomerId = Assert.IsAssignableFrom<string>(okResult.Value);
-            Assert.Equal(expectedCustomer.Id, actualCustomerId);
+            var actualCustomerId = Assert.IsAssignableFrom<Customer>(okResult.Value);
+            Assert.Equal(expectedCustomer.Id, actualCustomerId.Id);
         }
 
         [Fact]
