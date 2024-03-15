@@ -42,7 +42,7 @@ namespace UserAPI.Controllers
                 return BadRequest();
             }
             var customrCreated = await _customerService.CreateAsync(customer);
-            _rabitMQProducer.SendMessage("Customer Added " + customrCreated);
+            _rabitMQProducer.SendMessage(customrCreated);
 
             return Ok(customer);
         }
@@ -55,7 +55,7 @@ namespace UserAPI.Controllers
                 return NotFound();
             }
             await _customerService.UpdateAsync(id, customerIn);
-            _rabitMQProducer.SendMessage("Customer Updated " + customerIn);
+            _rabitMQProducer.SendMessage(customerIn);
             return Ok(customerIn);
         }
         [HttpDelete("{id}")]

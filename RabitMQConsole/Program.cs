@@ -1,21 +1,24 @@
-﻿using RabbitMQ.Client;
+﻿using Microsoft.Extensions.Configuration;
+using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System;
 using System.Text;
-
 namespace RabitMQConsole
 {
 	internal class Program
 	{
 		static void Main(string[] args)
 		{
+            IConfiguration configuration = new ConfigurationBuilder()
+                    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                    .Build();
 			var factory = new ConnectionFactory
-            {
-                Uri = new Uri("amqps://tiazptpq:wz-cem92aDRKMq-hr4HmcH2xEskGb3hV@fish.rmq.cloudamqp.com/tiazptpq")
-            };
+			{
+				Uri = new Uri(configuration["ConnectionUri"])
+			};
 
-            //Create the RabbitMQ connection using connection factory details as i mentioned above
-            var connection = factory.CreateConnection();
+			//Create the RabbitMQ connection using connection factory details as i mentioned above
+			var connection = factory.CreateConnection();
 
 			//Here we create channel with session and model
 			var channel = connection.CreateModel();
