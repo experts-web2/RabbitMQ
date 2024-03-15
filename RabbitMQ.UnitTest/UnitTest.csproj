@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -24,7 +24,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RabitMqAPI\RabitMqAPI.csproj" />
+    <ProjectReference Include="..\RabitMQ.BAL\Services.csproj" />
+    <ProjectReference Include="..\RabitMQ.Domain\Domains.csproj" />
+    <ProjectReference Include="..\RabitMQ.Utilities\Utilities.csproj" />
+    <ProjectReference Include="..\RabitMqAPI\UserAPI.csproj" />
   </ItemGroup>
 
 </Project>

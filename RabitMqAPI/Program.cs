@@ -1,10 +1,10 @@
 using Domains.Models;
 using Microsoft.OpenApi.Models;
-using RabitMqAPI.RabitMQ;
 using Repositories.Implementation;
 using Repositories.Interface;
 using Services.Implementation;
 using Services.Interface;
+using Utilities.RabitMQServices;
 
 namespace UserAPI
 {
@@ -24,7 +24,7 @@ namespace UserAPI
 			builder.Services.Configure<DbConfiguration>(builder.Configuration.GetSection("MongoDbConnection"));
             builder.Services.AddScoped<ICustomerService, CustomerService>();
 			builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
-			builder.Services.AddScoped<IRabitMQProducer, RabitMQProducer>();
+			builder.Services.AddScoped<IRabitMQService, RabitMQService>();
 			builder.Services.AddControllers();
 			// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 			builder.Services.AddEndpointsApiExplorer();

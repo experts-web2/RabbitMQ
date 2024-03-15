@@ -18,4 +18,8 @@
     <ProjectReference Include="..\RabitMQ.BAL\Services.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\RabitMQ.Utilities\Utilities.csproj" />
+  </ItemGroup>
+
 </Project>

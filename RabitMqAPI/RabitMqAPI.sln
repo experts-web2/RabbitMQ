@@ -7,13 +7,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserAPI", "UserAPI.csproj",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabitMQConsole", "..\RabitMQConsole\RabitMQConsole.csproj", "{20A683FB-7ADB-4FAC-A37D-4315FC8DF0F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitMQ.UnitTest", "..\RabbitMQ.UnitTest\RabbitMQ.UnitTest.csproj", "{14CD8F41-A8DC-45E3-89AE-370EF552A4A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTest", "..\RabbitMQ.UnitTest\UnitTest.csproj", "{14CD8F41-A8DC-45E3-89AE-370EF552A4A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domains", "..\RabitMQ.Domain\Domains.csproj", "{9219B8CE-E4A0-4941-9F32-2CDDA03819C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domains", "..\RabitMQ.Domain\Domains.csproj", "{9219B8CE-E4A0-4941-9F32-2CDDA03819C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repositories", "..\RabitMQ.DAL\Repositories.csproj", "{6D9204AA-F166-4A7A-9E79-2330293D9ACB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repositories", "..\RabitMQ.DAL\Repositories.csproj", "{6D9204AA-F166-4A7A-9E79-2330293D9ACB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "..\RabitMQ.BAL\Services.csproj", "{D3CC128E-78A4-48DC-93AA-E93542707875}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "..\RabitMQ.BAL\Services.csproj", "{D3CC128E-78A4-48DC-93AA-E93542707875}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Utilities", "..\RabitMQ.Utilities\Utilities.csproj", "{53E7FE2D-5DFA-4F2F-AB56-CF5F7A02AF10}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RabitMQ.Service", "..\RabitMQ.Service\RabitMQ.Service.csproj", "{86DFE14A-6B80-41F8-9719-529209997155}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +33,30 @@ Global
 		{20A683FB-7ADB-4FAC-A37D-4315FC8DF0F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{20A683FB-7ADB-4FAC-A37D-4315FC8DF0F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{20A683FB-7ADB-4FAC-A37D-4315FC8DF0F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14CD8F41-A8DC-45E3-89AE-370EF552A4A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14CD8F41-A8DC-45E3-89AE-370EF552A4A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14CD8F41-A8DC-45E3-89AE-370EF552A4A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14CD8F41-A8DC-45E3-89AE-370EF552A4A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9219B8CE-E4A0-4941-9F32-2CDDA03819C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9219B8CE-E4A0-4941-9F32-2CDDA03819C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9219B8CE-E4A0-4941-9F32-2CDDA03819C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9219B8CE-E4A0-4941-9F32-2CDDA03819C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D9204AA-F166-4A7A-9E79-2330293D9ACB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D9204AA-F166-4A7A-9E79-2330293D9ACB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D9204AA-F166-4A7A-9E79-2330293D9ACB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D9204AA-F166-4A7A-9E79-2330293D9ACB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3CC128E-78A4-48DC-93AA-E93542707875}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3CC128E-78A4-48DC-93AA-E93542707875}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3CC128E-78A4-48DC-93AA-E93542707875}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3CC128E-78A4-48DC-93AA-E93542707875}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53E7FE2D-5DFA-4F2F-AB56-CF5F7A02AF10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53E7FE2D-5DFA-4F2F-AB56-CF5F7A02AF10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53E7FE2D-5DFA-4F2F-AB56-CF5F7A02AF10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53E7FE2D-5DFA-4F2F-AB56-CF5F7A02AF10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86DFE14A-6B80-41F8-9719-529209997155}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86DFE14A-6B80-41F8-9719-529209997155}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86DFE14A-6B80-41F8-9719-529209997155}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86DFE14A-6B80-41F8-9719-529209997155}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

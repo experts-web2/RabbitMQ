@@ -1,7 +1,7 @@
 ﻿using Domains.Models;
 using Microsoft.AspNetCore.Mvc;
-using RabitMqAPI.RabitMQ;
 using Services.Interface;
+using Utilities.RabitMQServices;
 
 namespace UserAPI.Controllers
 {
@@ -10,8 +10,8 @@ namespace UserAPI.Controllers
     public class CustomerController : ControllerBase
     {
         private readonly ICustomerService _customerService;
-        private readonly IRabitMQProducer _rabitMQProducer;
-        public CustomerController(ICustomerService customerService, IRabitMQProducer rabitMQProducer)
+        private readonly IRabitMQService _rabitMQProducer;
+        public CustomerController(ICustomerService customerService, IRabitMQService rabitMQProducer)
         {
             _customerService = customerService;
             _rabitMQProducer = rabitMQProducer;
@@ -20,7 +20,8 @@ namespace UserAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _customerService.GetAllAsync());
+            var customers = await _customerService.GetAllAsync();
+            return Ok(customers);
         }
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(string id)
@@ -31,6 +32,7 @@ namespace UserAPI.Controllers
                 return NotFound();
             }
             return Ok(customer);
+
         }
         [HttpPost]
         public async Task<IActionResult> Create(Customer customer)
@@ -40,7 +42,7 @@ namespace UserAPI.Controllers
                 return BadRequest();
             }
             var customrCreated = await _customerService.CreateAsync(customer);
-            _rabitMQProducer.SendMessage(customrCreated);
+            _rabitMQProducer.SendMessage("Customer Added " + customrCreated);
 
             return Ok(customer);
         }
@@ -53,6 +55,7 @@ namespace UserAPI.Controllers
                 return NotFound();
             }
             await _customerService.UpdateAsync(id, customerIn);
+            _rabitMQProducer.SendMessage("Customer Updated " + customerIn);
             return Ok(customerIn);
         }
         [HttpDelete("{id}")]
@@ -64,7 +67,8 @@ namespace UserAPI.Controllers
                 return NotFound();
             }
             await _customerService.DeleteAsync(customer.Id);
-            return Ok("Delete Successfully")
+            _rabitMQProducer.SendMessage("Customer Deleted ");
+            return Ok("Delete Successfully");
         }
 
     }

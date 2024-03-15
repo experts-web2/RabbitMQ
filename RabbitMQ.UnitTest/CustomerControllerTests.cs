@@ -1,11 +1,11 @@
+using Domains.Models;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using RabitMqAPI.Controllers;
-using RabitMqAPI.Models;
-using RabitMqAPI.RabitMQ;
-using RabitMqAPI.Services;
+using Services.Interface;
+using UserAPI.Controllers;
+using Utilities.RabitMQServices;
 
-namespace RabbitMQ.UnitTest
+namespace UnitTest
 {
     public class CustomerControllerTests
     {
@@ -20,7 +20,7 @@ namespace RabbitMQ.UnitTest
         {
             // Arrange
             var mockCustomerService = new Mock<ICustomerService>();
-            var rabitMQProducerService = new Mock<IRabitMQProducer>();
+            var rabitMQProducerService = new Mock<IRabitMQService>();
 
 
             mockCustomerService.Setup(service => service.GetAllAsync())
@@ -42,7 +42,7 @@ namespace RabbitMQ.UnitTest
         {
             // Arrange
             var mockCustomerService = new Mock<ICustomerService>();
-            var rabitMQProducerService = new Mock<IRabitMQProducer>();
+            var rabitMQProducerService = new Mock<IRabitMQService>();
 
             var expectedCustomer = new Customer { Id = "1", FirstName = "John", LastName = "Doe", Contact = "0323423", Email = "john@gmail.com", Country = "Usa" };
             mockCustomerService.Setup(service => service.GetByIdAsync("1"))
@@ -64,7 +64,7 @@ namespace RabbitMQ.UnitTest
         {
             // Arrange
             var mockCustomerService = new Mock<ICustomerService>();
-            var rabitMQProducerService = new Mock<IRabitMQProducer>();
+            var rabitMQProducerService = new Mock<IRabitMQService>();
 
             mockCustomerService.Setup(service => service.GetByIdAsync("invalidId"))
                 .ReturnsAsync((Customer)null);
@@ -83,13 +83,13 @@ namespace RabbitMQ.UnitTest
         {
             // Arrange
             var mockCustomerService = new Mock<ICustomerService>();
-            var rabitMQProducerService = new Mock<IRabitMQProducer>();
+            var rabitMQProducerService = new Mock<IRabitMQService>();
             var expectedCustomer = new Customer { Id = "3", FirstName = "John", LastName = "Doe", Contact = "0323423", Email = "john@gmail.com", Country = "Usa" };
 
             mockCustomerService.Setup(service => service.CreateAsync(expectedCustomer))
                 .ReturnsAsync(expectedCustomer);
 
-           
+
 
             var controller = new CustomerController(mockCustomerService.Object, rabitMQProducerService.Object);
 
@@ -107,7 +107,7 @@ namespace RabbitMQ.UnitTest
         {
             // Arrange
             var mockCustomerService = new Mock<ICustomerService>();
-            var rabitMQProducerService = new Mock<IRabitMQProducer>();
+            var rabitMQProducerService = new Mock<IRabitMQService>();
             var invalidCustomer = new Customer(); // Invalid customer without required properties
 
 
@@ -126,19 +126,20 @@ namespace RabbitMQ.UnitTest
         {
             // Arrange
             var mockCustomerService = new Mock<ICustomerService>();
-            var rabitMQProducerService = new Mock<IRabitMQProducer>();
-            var existingCustomer = new Customer { Id = "validId", FirstName = "John", LastName = "Doe" };
-            var updatedCustomer = new Customer { Id = "validId", FirstName = "Jane", LastName = "Smith" };
-            mockCustomerService.Setup(service => service.GetByIdAsync("validId"))
+            var rabitMQProducerService = new Mock<IRabitMQService>();
+            var existingCustomer = new Customer { Id = "1", FirstName = "John", LastName = "Doe" };
+            var updatedCustomer = new Customer { Id = "1", FirstName = "Jane", LastName = "Smith" };
+            mockCustomerService.Setup(service => service.GetByIdAsync("1"))
                 .ReturnsAsync(existingCustomer);
 
             var controller = new CustomerController(mockCustomerService.Object, rabitMQProducerService.Object);
 
             // Act
-            var result = await controller.Update("validId", updatedCustomer);
+            var result = await controller.Update("1", updatedCustomer);
 
             // Assert
-            Assert.IsType<NoContentResult>(result);
+            Assert.Equal(existingCustomer.Id , updatedCustomer.Id);
+            Assert.NotEqual(existingCustomer.FirstName , updatedCustomer.FirstName);
         }
 
         [Fact]
@@ -146,7 +147,7 @@ namespace RabbitMQ.UnitTest
         {
             // Arrange
             var mockCustomerService = new Mock<ICustomerService>();
-            var rabitMQProducerService = new Mock<IRabitMQProducer>();
+            var rabitMQProducerService = new Mock<IRabitMQService>();
             var invalidCustomer = new Customer { Id = "invalidId", FirstName = "Invalid", LastName = "Customer" };
 
             var controller = new CustomerController(mockCustomerService.Object, rabitMQProducerService.Object);
@@ -163,7 +164,7 @@ namespace RabbitMQ.UnitTest
         {
             // Arrange
             var mockCustomerService = new Mock<ICustomerService>();
-            var rabitMQProducerService = new Mock<IRabitMQProducer>();
+            var rabitMQProducerService = new Mock<IRabitMQService>();
             var existingCustomer = new Customer { Id = "1", FirstName = "John", LastName = "Doe" };
             mockCustomerService.Setup(service => service.GetByIdAsync("1"))
                 .ReturnsAsync(existingCustomer);
@@ -174,7 +175,8 @@ namespace RabbitMQ.UnitTest
             var result = await controller.Delete("1");
 
             // Assert
-            Assert.IsType<NoContentResult>(result);
+            Assert.IsType<OkObjectResult>(result);
+            Assert.Equal("Delete Successfully", (result as OkObjectResult)?.Value);
         }
 
         [Fact]
@@ -182,7 +184,7 @@ namespace RabbitMQ.UnitTest
         {
             // Arrange
             var mockCustomerService = new Mock<ICustomerService>();
-            var rabitMQProducerService = new Mock<IRabitMQProducer>();
+            var rabitMQProducerService = new Mock<IRabitMQService>();
             var controller = new CustomerController(mockCustomerService.Object, rabitMQProducerService.Object);
 
             // Act
