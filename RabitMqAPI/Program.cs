@@ -1,13 +1,14 @@
+using Domains.Models;
 using Microsoft.OpenApi.Models;
-using RabbitMQ.Client;
-using RabitMqAPI.Models;
 using RabitMqAPI.RabitMQ;
-using RabitMqAPI.Repository;
-using RabitMqAPI.Services;
+using Repositories.Implementation;
+using Repositories.Interface;
+using Services.Implementation;
+using Services.Interface;
 
-namespace RabitMqAPI
+namespace UserAPI
 {
-	public class Program
+    public class Program
 	{
 		public static void Main(string[] args)
 		{

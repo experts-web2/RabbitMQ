@@ -1,8 +1,9 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Domains.Models;
+using Microsoft.Extensions.Options;
 using MongoDB.Driver;
-using RabitMqAPI.Models;
+using Repositories.Interface;
 
-namespace RabitMqAPI.Repository
+namespace Repositories.Implementation
 {
     public class CustomerRepository : ICustomerRepository
     {

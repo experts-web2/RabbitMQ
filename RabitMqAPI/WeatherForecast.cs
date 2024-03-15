@@ -1,4 +1,4 @@
-namespace RabitMqAPI
+namespace UserAPI
 {
 	public class WeatherForecast
 	{

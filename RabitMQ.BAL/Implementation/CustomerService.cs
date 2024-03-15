@@ -1,9 +1,10 @@
-﻿using RabitMqAPI.Models;
-using RabitMqAPI.Repository;
+﻿using Domains.Models;
+using Repositories.Interface;
+using Services.Interface;
 
-namespace RabitMqAPI.Services
+namespace Services.Implementation
 {
-	public class CustomerService : ICustomerService
+    public class CustomerService : ICustomerService
     {
         private readonly ICustomerRepository _customerRepository;
 

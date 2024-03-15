@@ -1,8 +1,8 @@
-﻿using RabitMqAPI.Models;
+﻿using Domains.Models;
 
-namespace RabitMqAPI.Repository
+namespace Repositories.Interface
 {
-	public interface ICustomerRepository
+    public interface ICustomerRepository
     {
         Task<List<Customer>> GetAllAsync();
         Task<Customer> GetByIdAsync(string id);
